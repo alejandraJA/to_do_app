@@ -1,6 +1,6 @@
 <template>
 <div id="to_do_card">
-<span>{{task.task}}</span>
+    <span>{{task.message}}</span>
 </div>
 </template>
 

@@ -4,24 +4,32 @@
         <li id="title">
             <h1>To do</h1>
         </li>
-        <li v-for="(item, index) in filters" :key="item" v-text="item.message" :class="filterClass(item.selected)" @click="filter(index)"/>
+        <li v-for="(item) in filters" :key="item" v-text="item.message" :class="filterClass(item.selected)" @click="filter(item)" />
     </ul>
 </nav>
-<section>
-    <input type="text" placeholder="Enter task">
-    <ButtonAdd name="Add" />
+<section id="add">
+    <input v-model="task" type="text" placeholder="Enter task">
+    <ButtonAdd name="Add" @click="addTask()" />
+</section>
+
+<section id="toDoCards" v-for="(task) in tasks" :key="task">
+    <ToDoCard :task="task" v-if="task.view" />
 </section>
 </template>
 
 <script>
 import ButtonAdd from './components/ButtonAdd.vue';
+import ToDoCard from './components/ToDoCard.vue';
 export default {
     name: 'App',
     components: {
-        ButtonAdd
+        ButtonAdd,
+        ToDoCard
     },
     data() {
         return {
+            filterPropiety: "All",
+            task: "",
             filters: [{
                     message: "All",
                     selected: true
@@ -34,19 +42,44 @@ export default {
                     message: "Undone",
                     selected: false
                 },
-            ]
+            ],
+            tasks: [{
+                message: "Aprender css",
+                status: false,
+                edit: false,
+                view: true
+            }, ]
         }
     },
     methods: {
         filterClass: function (status) {
             return ['filter', status ? 'checked' : 'unchecked']
         },
-        filter: function(index) {
-          this.filters[0].selected = false
-          this.filters[1].selected = false
-          this.filters[2].selected = false
-          this.filters[index].selected = true
-          return
+        filter: function (item) {
+            this.filters[0].selected = false
+            this.filters[1].selected = false
+            this.filters[2].selected = false
+            item.selected = true
+            this.filterPropiety = item.message
+            return
+        },
+        addTask: function () {
+            if (this.task != null) {
+                this.tasks.push({
+                    message: this.task,
+                    status: false,
+                    edit: false,
+                    view: true
+                })
+                this.filterPropiety = "all"
+                this.filters[0].selected = true
+                this.filters[1].selected = false
+                this.filters[2].selected = false
+                this.task = ""
+            } else {
+                // TODO
+            }
+            return
         }
     }
 }
@@ -71,6 +104,10 @@ export default {
     font-size: 16px;
     letter-spacing: -0.047em;
     cursor: default;
+}
+
+#add {
+    margin-bottom: 32px;
 }
 
 ul {

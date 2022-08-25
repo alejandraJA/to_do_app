@@ -14,6 +14,7 @@ export default {
 .button {
     background-color: #FFFFFF;
     border: 0;
+    width: 10%;
     border-radius: .5rem;
     box-sizing: border-box;
     color: #111827;

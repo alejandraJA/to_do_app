@@ -84,10 +84,6 @@ export default {
             }
             return
         },
-        edit: function (index) {
-            this.tasks[index].edit = !this.tasks[index].edit
-            return
-        },
         done: function (index) {
             this.tasks[index].edit = false
             this.tasks[index].status = !this.tasks[index].status
@@ -157,7 +153,7 @@ export default {
 #add {
     width: 100%;
     display: flex;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
 }
 
 nav {

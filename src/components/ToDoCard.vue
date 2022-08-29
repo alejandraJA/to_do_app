@@ -38,23 +38,20 @@ export default {
     },
     methods: {
         getClass: function (status) {
-            return ["card", status ? "done" : "unDone"];
+            return ["card", status ? "done" : "unDone"]
         },
         edit: function () {
-            this.editMessage(this.message, this.index);
-            return;
+            this.editMessage(this.message, this.index)
         },
         done: function () {
-            this.doneP(this.index);
-            return;
+            this.doneP(this.index)
         },
         removeTask: function () {
-            this.removeTaskP(this.index);
-            return;
+            this.removeTaskP(this.index)
         }
     },
     mounted() {
-        this.editMessage(this.message, this.index);
+        this.editMessage(this.message, this.index)
     },
     components: { ButtonAdd }
 }

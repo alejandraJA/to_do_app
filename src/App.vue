@@ -65,7 +65,6 @@ export default {
             this.filters[2].selected = false
             item.selected = true
             this.filterPropiety = item.message
-            return
         },
         addTask: function () {
             if (this.task.length >= 1) {
@@ -82,21 +81,17 @@ export default {
             } else {
                 // TODO
             }
-            return
         },
         done: function (index) {
             this.tasks[index].edit = false
             this.tasks[index].status = !this.tasks[index].status
-            return
         },
         removeTask: function (index) {
             this.tasks.splice(index, 1)
-            return
         },
         editMessage(message, index) {
             this.tasks[index].edit = !this.tasks[index].edit
             this.tasks[index].message = message
-            return
         }
     },
     computed: {

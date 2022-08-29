@@ -8,21 +8,16 @@
     </ul>
 </nav>
 
-<p v-text="'Done ' + doneCount + ' Undone ' + undone" />
 
 <section class="container">
+    <p v-text="'Done ' + doneCount + ' Undone ' + undone" />
     <section id="add">
         <input v-model="task" type="text" placeholder="Enter task" v-on:keyup.enter="addTask()">
         <ButtonAdd name="Add" @click="addTask()" />
     </section>
 
-    <section id="toDoCards" v-for="(task, index) in taskFilter" :key="task">
-        <ToDoCard :task="task" v-if="!task.edit" class="marginI" @click="edit(index)" />
-        <input v-model="task.message" type="text" placeholder="Enter task" v-if="task.edit" class="marginI" v-on:keyup.enter="edit(index)" />
-        <ButtonAdd name="Done" class="marginI" v-if="(!task.status)" @click="done(index)" />
-        <ButtonAdd name="undone" class="marginI" v-if="(task.status)" @click="done(index)" />
-        <ButtonAdd name="Delete" @click="removeTask(index)" />
-    </section>
+    <ToDoCard v-for="(task, index) in taskFilter" :key="task" :task="task" :index="index" :editP="edit" :doneP="done" :removeTaskP="removeTask" :editMessage="editMessage" />
+    
 </section>
 </template>
 
@@ -70,7 +65,6 @@ export default {
             this.filters[2].selected = false
             item.selected = true
             this.filterPropiety = item.message
-            return
         },
         addTask: function () {
             if (this.task.length >= 1) {
@@ -87,20 +81,17 @@ export default {
             } else {
                 // TODO
             }
-            return
-        },
-        edit: function (task) {
-            this.tasks[task].edit = !this.tasks[task].edit
-            return
         },
         done: function (index) {
             this.tasks[index].edit = false
             this.tasks[index].status = !this.tasks[index].status
-            return
         },
         removeTask: function (index) {
             this.tasks.splice(index, 1)
-            return
+        },
+        editMessage(message, index) {
+            this.tasks[index].edit = !this.tasks[index].edit
+            this.tasks[index].message = message
         }
     },
     computed: {
@@ -132,7 +123,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #app {
     font-family: "Google Sans", Roboto, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -149,23 +140,24 @@ export default {
     cursor: default;
 }
 
-#add {
-    margin-bottom: 32px;
-    display: flex;
-}
-
-#toDoCards {
-    margin-top: 8px;
-    display: flex;
-}
-
 .container {
     margin-right: 20%;
     margin-left: 20%;
 }
 
+#add {
+    width: 100%;
+    display: flex;
+    margin-bottom: 32px;
+}
+
+nav {
+    margin-right: 20%;
+    margin-left: 20%;
+}
+
 ul {
-    list-style-type: none;
+    padding-left: 0px;
 }
 
 li {
@@ -193,10 +185,6 @@ input {
 
 input:focus {
     background-color: #ebeef1;
-}
-
-.marginI {
-    margin-right: 1%;
 }
 
 .filter {
